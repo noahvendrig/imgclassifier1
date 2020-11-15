@@ -2,16 +2,19 @@ import os
 import pathlib
 import cv2
 
-'''
-if "models" in pathlib.Path.cwd().parts:
-  while "models" in pathlib.Path.cwd().parts:
-    os.chdir('..')
-elif not pathlib.Path('models').exists():
-  git clone --depth 1 https://github.com/tensorflow/models
-'''
-"""Compile protobufs and install the object_detection package"""
-
 dir_models = "d:/apps/"
+
+# Labels dir: D:/Apps/models/research/object_detection/data/mscoco_label_map.pbtxt
+# Model Dir: C:\Users\elect_09l\.keras\datasets\ssd_mobilenet_v1_coco_2017_11_17\saved_model
+
+''' ########################################################### '''
+##
+input_video = 'example2.mp4'
+##
+''' ########################################################### '''
+
+
+
 
 """### Imports"""
 
@@ -53,7 +56,7 @@ from object_detection.utils import visualization_utils as vis_util
 import shutil
 import glob
 
-NR_IMAGES_TO_PROCESS = 10 # Set to -1 for all
+NR_IMAGES_TO_PROCESS = -1 # Set to -1 for all
 
 base_path = "D:/py/project/vid_img_gen/"
 
@@ -87,7 +90,7 @@ def make_dir():
 def create_images():
   # Playing video from file:
   vid_dir = base_path+"input/"
-  cap = cv2.VideoCapture(vid_dir+'traffic1.mp4')
+  cap = cv2.VideoCapture(vid_dir+input_video)
 
   currentFrame = 0
 
@@ -230,7 +233,7 @@ def run_inference_for_single_image(model, image):
 def show_inference(model, image_path):
   # the array based representation of the image will be used later in order to prepare the
   # result image with boxes and labels on it.
-  print("Open",image_path)
+  print("Open",image_path, end='\r')
   image_np = np.array(Image.open(image_path))
   assert image_np is not None, "Image did not load properly "+image_path
   assert len(image_np.shape)==3, "Image corrupted "+image_path
