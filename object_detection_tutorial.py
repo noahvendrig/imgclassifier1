@@ -39,8 +39,9 @@ print(c)
 
 
 ###
-os.chdir("D:/py/project/vid_img_gen")
+os.chdir("F:/Users/elect_09l/github/imgclassifier1")
 ###
+
 from collections import defaultdict
 from io import StringIO
 from matplotlib import pyplot as plt
@@ -58,7 +59,7 @@ import glob
 
 NR_IMAGES_TO_PROCESS = -1 # Set to -1 for all
 
-base_path = "D:/py/project/vid_img_gen/"
+base_path = "F:/Users/elect_09l/github/imgclassifier1/"
 
 def delete_dir():
   dir_folder_list = [base_path+"data", base_path+"analysis_img", base_path+"proc_vid"]
@@ -166,7 +167,8 @@ category_index = label_map_util.create_category_index_from_labelmap(PATH_TO_LABE
 
 # If you want to test the code with your images, just add path to the images to the TEST_IMAGE_PATHS.
 # PATH_TO_TEST_IMAGES_DIR = pathlib.Path(dir_models+'models/research/object_detection/test_images/snapshot_serengeti')
-dir_data = r"D:\py\project\vid_img_gen\data"
+dir_data = r"F:\Users\elect_09l\github\imgclassifier1\data"
+# D:\py\project\vid_img_gen\data
 
 
 PATH_TO_TEST_IMAGES_DIR = pathlib.Path(dir_data)
@@ -262,7 +264,7 @@ except OSError:
     print ('Error: Creating directory of data')
 '''
 print("Create video")
-dir_base = "D:/py/project/vid_img_gen/analysis_img/" # make sure to end with forward slash
+dir_base = "F:/Users/elect_09l/github/imgclassifier1/analysis_img/" # make sure to end with forward slash
 CODEC = "MJPG"
 assert len(CODEC)==4,"FOURCC code needs to have exactly four characters"
 fourcc = cv2.VideoWriter_fourcc(CODEC[0],CODEC[1],CODEC[2],CODEC[3])
@@ -278,7 +280,7 @@ vh = dimension_img.shape[0] #240
 fps = 25 # frame rate of output video
 #writer = cv2.VideoWriter(dir_base+"demo.avi", fourcc, fps, (vw, vh), True)
 #writer = cv2.VideoWriter(dir_base+"demo.avi", fourcc, fps, (vw, vh), True)
-writer = cv2.VideoWriter("D:/py/project/vid_img_gen/proc_vid/"+"processed_vid.avi", fourcc, fps, (vw, vh), True)
+writer = cv2.VideoWriter("F:/Users/elect_09l/github/imgclassifier1/proc_vid/"+"processed_vid.avi", fourcc, fps, (vw, vh), True)
 
 current_frame = 0
 
@@ -297,10 +299,26 @@ for image_path in TEST_IMAGE_PATHS[:NR_IMAGES_TO_PROCESS]:
   writer.write(image_np) # This is to convert from OpenCV format, otherwise just use writer.write(image)
   current_frame += 1
 
-  key = cv2.waitKey(10)#pauses for 3 seconds before fetching next image
+  key = cv2.waitKey(3)#pauses for 3 seconds before fetching next image
 
   if key == 27: #if ESC is pressed, exit loop
     cv2.destroyAllWindows()
     break
 writer.release() # put this at the end so that the file is closed
-print("Released video")
+print("Released video ")
+
+
+
+clear_folders = True
+
+if clear_folders:
+  dir_folder_list = [base_path+"data", base_path+"analysis_img"]
+
+  for folder in dir_folder_list:
+      try:
+          if not os.path.exists(folder):
+              continue
+      except OSError:
+          print ('Error: Deleting directory of: '+folder)
+          
+      shutil.rmtree(folder)
